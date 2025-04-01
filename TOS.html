@@ -34,6 +34,80 @@
             box-sizing: border-box;
             font-family: 'NasalizationRg', 'NasalizationRg',
         }
+
+          /* Download Section Styles */
+        .download-section {
+            background: var(--metallic-gradient);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 30%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .download-options {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .download-card {
+            background: rgba(10, 10, 20, 0.6);
+            border: var(--metallic-border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            max-width: 400px;
+        }
+        
+        .download-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--metallic-shadow);
+        }
+        
+        .platform-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem;
+            fill: var(--accent-color);
+        }
+        
+        .download-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        
+        .download-card p {
+            color: #b0b0b0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .download-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .download-size {
+            display: block;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            color: #b0b0b0;
+        }
         
         body {
             background-color: var(--primary-color);
