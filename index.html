@@ -746,11 +746,98 @@ s0.parentNode.insertBefore(s1,s0);
     <div class="container">
         <h2 class="section-title">DOWNLOAD NULL</h2>
         
-        <div class="download-options">
-            <a href="Request.html" class="btn request-btn">Request Beta Testing</a>
+    <style>
+        .form-container {
+            background: #2f3136;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #b9bbbe;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            background: #40444b;
+            border: 1px solid #202225;
+            border-radius: 4px;
+            color: white;
+            box-sizing: border-box;
+        }
+        button {
+            background: #5865f2; /* Discord blurple */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #4752c4;
+        }
+        .discord-logo {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="discord-logo">
+            <svg width="40" height="30" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M40.8 3.6C36.9 1.6 32.6 0.2 28.1 0C27.6 0.7 27 1.6 26.5 2.4C21.4 1.8 16.3 1.8 11.3 2.4C10.8 1.6 10.2 0.7 9.7 0C5.1 0.2 0.9 1.6 -3 3.6C-3 3.6 -6.4 14.3 5.6 20.3C5.6 20.3 8.3 18.8 10.5 17.4C11.5 18.3 12.5 19.3 13.5 20.2C10.9 21.6 8.4 22.7 5.6 23.6C7.9 25.4 11.8 27.3 16.3 28.1C14.8 29.6 12.9 31 10.4 32.3C16.1 35.4 22.6 36.5 28 34.6C32.1 33 35.4 29.9 37.7 26.2C42.8 23.8 46.4 19.6 48 15C44.9 13.8 41.8 12.4 39.1 10.7C40.2 9.7 41.2 8.7 42.2 7.6C39.5 9.1 36.6 10.3 33.5 11.2C37.7 7.4 40.8 3.6 40.8 3.6ZM16.1 24.2C13.4 24.2 11.2 21.8 11.2 18.9C11.2 16 13.5 13.6 16.1 13.6C18.8 13.6 21 16 21 18.9C21 21.8 18.7 24.2 16.1 24.2ZM31.7 24.2C29 24.2 26.8 21.8 26.8 18.9C26.8 16 29.1 13.6 31.7 13.6C34.4 13.6 36.6 16 36.6 18.9C36.6 21.8 34.3 24.2 31.7 24.2Z" fill="white"/>
+            </svg>
+            <h2>Join Our Discord</h2>
         </div>
+        <form id="discordForm">
+            <div class="form-group">
+                <label for="username">Discord Username:</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    placeholder="Username#1234" 
+                    pattern=".{3,32}#[0-9]{4}" 
+                    title="Format: YourName#0000 (e.g., JohnDoe#1234)" 
+                    required
+                >
+            </div>
+            <button type="submit">Submit</button>
+        </form>
     </div>
-</section>
+
+    <!-- Crazy Egg Tracking (Sets Discord username as Visitor ID) -->
+    <script>
+        document.getElementById("discordForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const discordUsername = document.getElementById("username").value;
+            
+            // Validate Discord username format (e.g., "User#1234")
+            if (!discordUsername.match(/^.+#\d{4}$/)) {
+                alert("Please use the format: Username#1234");
+                return;
+            }
+
+            // Send to Crazy Egg (if installed)
+            if (window.CrazyEgg) {
+                window.CrazyEgg.visitor_email(discordUsername); // Uses username as ID
+            }
+
+            // Demo: Show submission (replace with real backend)
+            console.log("Discord Username Submitted:", discordUsername);
+            alert(`Thanks, ${discordUsername}! We'll contact you on Discord.`);
+        });
+    </script>
+</body>
+</html>
             
             <div class="steam-container">
                 <p>soon will be available on:</p>
