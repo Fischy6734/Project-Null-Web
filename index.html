@@ -5,6 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROJECT NULL | NEXT-GEN GAMING</title>
      <link rel="stylesheet" href="Style.css">
+    <script src="server.js"></script>
+    <body>
+<a href="https://github.com/login/oauth/authorize?client_id=Ov23liuZzCImoXNqqVU1&scope=user">Log in with GitHub</a>
+<div id="profile" style="display:none;">
+    <img id="avatar" src="" alt="Avatar" width="100" height="100">
+    <h1 id="name"></h1>
+    <p id="bio"></p>
+</div>
+<script>
+  function displayProfile(profile) {
+    document.getElementById('avatar').src = profile.avatar_url;
+    document.getElementById('name').textContent = profile.name || profile.login;
+    document.getElementById('bio').textContent = profile.bio || '';
+    document.getElementById('profile').style.display = 'block';
+  }
+
+  function getProfile() {
+    fetch('/profile')
+      .then(response => response.json())
+      .then(profile => displayProfile(profile))
+      .catch(error => console.log('Error:', error));
+  }
+
+  window.onload = function() {
+    getProfile();
+  }
+</script>
+</body>
+</html>
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-32S3QJPCKE"></script>
 <script>
