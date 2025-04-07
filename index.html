@@ -5,31 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROJECT NULL | NEXT-GEN GAMING</title>
      <link rel="stylesheet" href="Style.css">
-    <script src="server.js"></script>
-    <body>
-<a href="https://github.com/login/oauth/authorize?client_id=Ov23liuZzCImoXNqqVU1&scope=user">Log in with GitHub</a>
+<body>
+<a id="login-button" href="https://github.com/login/oauth/authorize?client_id=Ov23liuZzCImoXNqqVU1&scope=user">Log in with GitHub</a>
 <div id="profile" style="display:none;">
     <img id="avatar" src="" alt="Avatar" width="100" height="100">
     <h1 id="name"></h1>
-    <p id="bio"></p>
+    <button id="logout-button">Log Out</button>
 </div>
 <script>
+  // Function to display the user's profile
   function displayProfile(profile) {
     document.getElementById('avatar').src = profile.avatar_url;
     document.getElementById('name').textContent = profile.name || profile.login;
-    document.getElementById('bio').textContent = profile.bio || '';
     document.getElementById('profile').style.display = 'block';
+    document.getElementById('login-button').style.display = 'none';
   }
 
-  function getProfile() {
-    fetch('/profile')
+  // Function to handle logout
+  function logout() {
+    // Clear the access token from local storage
+    localStorage.removeItem('github_access_token');
+    document.getElementById('profile').style.display = 'none';
+    document.getElementById('login-button').style.display = 'block';
+  }
+
+  // Function to get the user's profile
+  function getProfile(token) {
+    fetch('https://api.github.com/user', {
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'User-Agent': 'Your App Name'
+      }
+    })
+    .then(response => response.json())
+    .then(profile => displayProfile(profile))
+    .catch(error => console.log('Error:', error));
+  }
+
+  // Function to handle OAuth callback
+  function handleOAuthCallback() {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+
+    if (code) {
+      // Exchange the authorization code for an access token
+      fetch(`https://github.com/login/oauth/access_token?client_id=Ov23liuZzCImoXNqqVU1&client_secret=5c3ca50dc7a55afdea42666a5ae5746a5be2cf71&code=${code}`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
       .then(response => response.json())
-      .then(profile => displayProfile(profile))
+      .then(data => {
+        const token = data.access_token;
+        if (token) {
+          // Save the access token in local storage
+          localStorage.setItem('github_access_token', token);
+          // Get the user's profile
+          getProfile(token);
+        }
+      })
       .catch(error => console.log('Error:', error));
+    }
   }
 
   window.onload = function() {
-    getProfile();
+    // Check if the user is already logged in
+    const token = localStorage.getItem('github_access_token');
+    if (token) {
+      getProfile(token);
+    } else {
+      handleOAuthCallback();
+    }
+
+    // Add event listener to the logout button
+    document.getElementById('logout-button').addEventListener('click', logout);
   }
 </script>
 </body>
