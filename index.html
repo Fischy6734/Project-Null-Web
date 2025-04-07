@@ -34,7 +34,7 @@
     fetch('https://api.github.com/user', {
       headers: {
         'Authorization': 'Bearer ' + token,
-        'User-Agent': 'Your App Name'
+        'User-Agent': 'Project Null Web'
       }
     })
     .then(response => response.json())
@@ -63,6 +63,8 @@
           localStorage.setItem('github_access_token', token);
           // Get the user's profile
           getProfile(token);
+          // Clear the URL parameters to remove the authorization code
+          window.history.replaceState({}, document.title, "/");
         }
       })
       .catch(error => console.log('Error:', error));
